@@ -6,6 +6,8 @@ const missed = 0;
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
+let lis = document.getElementsByClassName('letter');
+let button = document.querySelector('button');
 
 //event listener for reset button that removes the overaly 
 resetButton.addEventListener('click', () => {
@@ -50,19 +52,23 @@ resetButton.addEventListener('click', () => {
 
   //Function that checks to see if a specific letter is in the selected phrase
   const checkLetter = (button) => {
-    let lis = document.getElementsByTagName('li');
     let match = null; 
     for(let i = 0; i <= lis.length; i++){
-      if(button.textContent === lis[i].textContent){
+      let letter = lis[i]
+      if(button.textContent === letter.textContent){
         lis[i].className = "show";
         match.textContent = button.textContent;
-      }
+      } 
       return match; 
     };
-
-
-
-
-    
   };
+  
+
+  qwerty.addEventListener('click', (e) => {
+    if(e.target === button || e.target.className !== 'chosen'){
+      e.target.className = 'chosen';
+      console.log("adding class name");
+    }
+    
+  });
  
