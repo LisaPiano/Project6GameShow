@@ -46,3 +46,4 @@ let ul = document.getElementById('phrase');
  addPhraseToDisplay(array);
 
  console.log('WIll this work??');
+ console.log("Asking again...will this work???");
