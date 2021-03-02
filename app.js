@@ -1,3 +1,5 @@
+
+//Define all parameters
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const missed = 0; 
@@ -5,10 +7,12 @@ let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
 
- resetButton.addEventListener('click', () => {
+//event listener for reset button that removes the overaly 
+resetButton.addEventListener('click', () => {
     overlay.style.display = 'none';
   });
 
+  //array of phrases to be used in the game
   const phrases = [
     "To be or not to be",
     "An apple a day keeps the doctor away",
@@ -25,7 +29,6 @@ let ul = document.getElementById('phrase');
     let charArray = [];
     return(array[num]);
   };
-
   let array = getRandomPhraseAsArray(phrases);
 
 //Function that takes any array and returns it as a string of chars
@@ -40,9 +43,26 @@ let ul = document.getElementById('phrase');
                 li.className = "letter";
             }
          ul.appendChild(li);
-     }
+     }  
  };
  addPhraseToDisplay(array);
 
- console.log('WIll this work??');
- console.log("Asking again...will this work???");
+
+  //Function that checks to see if a specific letter is in the selected phrase
+  const checkLetter = (button) => {
+    let lis = document.getElementsByTagName('li');
+    let match = null; 
+    for(let i = 0; i <= lis.length; i++){
+      if(button.textContent === lis[i].textContent){
+        lis[i].className = "show";
+        match.textContent = button.textContent;
+      }
+      return match; 
+    };
+
+
+
+
+    
+  };
+ 
