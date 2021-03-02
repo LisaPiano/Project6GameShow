@@ -17,7 +17,6 @@ let ul = document.getElementById('phrase');
     "Luke I am your father",
     "With great power comes great responsibility",
     "All you need is love"
-    "A cat, a hat, in French Chat Chapeaux"
   ];
 
   //Function that takes an array of phrases as a parameter, and then returns a random phrase from the array using a random number generator
