@@ -6,7 +6,8 @@ const missed = 0;
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
-let lis = document.getElementsByClassName('letter');
+
+
 let button = document.querySelector('button');
 
 //event listener for reset button that removes the overaly 
@@ -39,9 +40,9 @@ resetButton.addEventListener('click', () => {
          let li = document.createElement('li');
          li.textContent = array.charAt(i);
 
-            if(li.textContent === ""){
+            if(li.textContent ===" "){
                 li.className = "space";
-            }   else {
+            } else {
                 li.className = "letter";
             }
          ul.appendChild(li);
@@ -51,24 +52,33 @@ resetButton.addEventListener('click', () => {
 
 
   //Function that checks to see if a specific letter is in the selected phrase
-  const checkLetter = (button) => {
-    let match = null; 
-    for(let i = 0; i <= lis.length; i++){
-      let letter = lis[i]
-      if(button.textContent === letter.textContent){
-        lis[i].className = "show";
-        match.textContent = button.textContent;
+  var checkLetter = (clickButton) => {
+  let everyLetter = document.querySelectorAll('li');
+  var match = null; 
+    for(let i = 0; i <= everyLetter.length; i++){
+     if(clickButton.textContent.toLowerCase() === everyLetter[i].textContent.toLowerCase()){
+      
+         match = 4; 
+        //lis[i].className = 'show';
+        //match = button.textContent; 
       } 
-      return match; 
+      return match;
     };
-  };
+ };
   
 
+  
+  
+  //detect click, and if button is clicked and hasn't been chosen yet,
+  //assign class name and variable of "letter"
   qwerty.addEventListener('click', (e) => {
     if(e.target === button || e.target.className !== 'chosen'){
-      e.target.className = 'chosen';
-      console.log("adding class name");
-    }
-    
-  });
- 
+      let button = e.target;
+      button.className = 'chosen';
+      button.disabled = true; 
+      let result = checkLetter(button);
+      console.log(result);
+    } else {
+      button.disabled = false; 
+    };
+   });
