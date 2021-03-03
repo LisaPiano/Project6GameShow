@@ -41,9 +41,9 @@ resetButton.addEventListener('click', () => {
          li.textContent = array.charAt(i);
 
             if(li.textContent ===" "){
-                li.className = "space";
+                li.className += "space";
             } else {
-                li.className = "letter";
+                li.className += "letter";
             }
          ul.appendChild(li);
      }  
@@ -53,17 +53,15 @@ resetButton.addEventListener('click', () => {
 
   //Function that checks to see if a specific letter is in the selected phrase
   var checkLetter = (clickButton) => {
-  let everyLetter = document.querySelectorAll('li');
+  let list = document.querySelectorAll('li');
   var match = null; 
-    for(let i = 0; i <= everyLetter.length; i++){
-     if(clickButton.textContent.toLowerCase() === everyLetter[i].textContent.toLowerCase()){
-      
-         match = 4; 
-        //lis[i].className = 'show';
-        //match = button.textContent; 
+    for(let i = 0; i <= list.length; i++){
+     if(clickButton.textContent.toLowerCase() === list[i].textContent.toLowerCase()){
+        list[i].className += ' show';
+        match = button.textContent; 
       } 
-      return match;
     };
+    console.log(match); 
  };
   
 
@@ -74,10 +72,9 @@ resetButton.addEventListener('click', () => {
   qwerty.addEventListener('click', (e) => {
     if(e.target === button || e.target.className !== 'chosen'){
       let button = e.target;
-      button.className = 'chosen';
+      button.className += 'chosen';
       button.disabled = true; 
       let result = checkLetter(button);
-      console.log(result);
     } else {
       button.disabled = false; 
     };
