@@ -76,10 +76,13 @@ qwerty.addEventListener('click', event => {
     const match = checkLetter(event.target.textContent.toLowerCase());
     if (match === null) {
       timesLost++;
-      console.log(timesLost);
-     const heart = document.getElementsByClassName('tries')[0].src;
-     heart
-    }
+      let heartNumber = 5-timesLost; 
+      console.log(heartNumber);
+    
+      const heart = document.querySelectorAll('img');
+      heart[heartNumber].setAttribute('src', "images/lostHeart.png");
+     
+    };
     // checkWin() function call goes here
   }
 });
