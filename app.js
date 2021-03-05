@@ -1,13 +1,9 @@
 
-//Define all parameters
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
-const missed = 0; 
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
-
-
 let button = document.querySelector('button');
 
 //event listener for reset button that removes the overaly 
@@ -50,32 +46,44 @@ resetButton.addEventListener('click', () => {
  };
  addPhraseToDisplay(array);
 
-
   //Function that checks to see if a specific letter is in the selected phrase
-  var checkLetter = (clickButton) => {
-  let list = document.querySelectorAll('li');
-  var match = null; 
-    for(let i = 0; i <= list.length; i++){
-     if(clickButton.textContent.toLowerCase() === list[i].textContent.toLowerCase()){
-        list[i].className += ' show';
-        match = button.textContent; 
-      } 
-    };
-    console.log(match); 
- };
+  //let checkLetter = (button) => {
+    
+const phraseLetters = document.querySelectorAll('.letter');
+
+
+
+let timesLost = 0;
+const checkLetter = (button) => {
+  let isMatch = null;
+  
+  
+  for (i=0; i < phraseLetters.length; i++) {
+    if (button === phraseLetters[i].textContent.toLowerCase()) {
+      phraseLetters[i].classList.add('show');
+      isMatch = true;
+    }
+    
+  }
+
+  return isMatch;
+};
+
+qwerty.addEventListener('click', event => {
+  if (event.target.tagName === "BUTTON") {
+    event.target.className = 'chosen';
+    event.target.disabled = true;
+    const match = checkLetter(event.target.textContent.toLowerCase());
+    if (match === null) {
+      timesLost++;
+      console.log(timesLost);
+     const heart = document.getElementsByClassName('tries')[0].src;
+     heart
+    }
+    // checkWin() function call goes here
+  }
+});
+  
+  
   
 
-  
-  
-  //detect click, and if button is clicked and hasn't been chosen yet,
-  //assign class name and variable of "letter"
-  qwerty.addEventListener('click', (e) => {
-    if(e.target === button || e.target.className !== 'chosen'){
-      let button = e.target;
-      button.className += 'chosen';
-      button.disabled = true; 
-      let result = checkLetter(button);
-    } else {
-      button.disabled = false; 
-    };
-   });
