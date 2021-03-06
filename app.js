@@ -5,6 +5,7 @@ let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
 let button = document.querySelector('button');
+let li = document.createElement('li');
 
 //event listener for reset button that removes the overaly 
 resetButton.addEventListener('click', () => {
@@ -33,7 +34,7 @@ resetButton.addEventListener('click', () => {
 //Function that takes any array and returns it as a string of chars
  const addPhraseToDisplay = (array) => {
      for (let i = 0; i < array.length; i++){
-         let li = document.createElement('li');
+      let li = document.createElement('li');
          li.textContent = array.charAt(i);
 
             if(li.textContent ===" "){
@@ -50,7 +51,6 @@ resetButton.addEventListener('click', () => {
   //let checkLetter = (button) => {
     
 const phraseLetters = document.querySelectorAll('.letter');
-
 
 
 let timesLost = 0;
@@ -78,14 +78,39 @@ qwerty.addEventListener('click', event => {
       timesLost++;
       let heartNumber = 5-timesLost; 
       console.log(heartNumber);
-    
       const heart = document.querySelectorAll('img');
       heart[heartNumber].setAttribute('src', "images/lostHeart.png");
-     
     };
     // checkWin() function call goes here
-  }
+  
+
+
+
+ // checkWin() function call goes here
+    const checkWin = () => {
+    const phraseLetters = document.querySelectorAll('.letter');
+    const show = document.querySelectorAll('.show');
+    const header = document.querySelectorAll('.title');
+
+      if(phraseLetters.length === show.length){
+        overlay.classList.add('win');
+        const winningHeadline = document.querySelector('.title');
+        winningHeadline.innerHTML = 'Congratulations! YOU WON!';
+        overlay.style.display = 'flex';
+      } else if (timesLost > 4){
+        overlay.classList.add('.lose');
+        const winningHeadline = document.querySelector('.title');
+        winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
+        overlay.style.display = 'flex';
+      };//end elseif
+  };//end function
+  checkWin();
+}
 });
+
+  
+
+
   
   
   
