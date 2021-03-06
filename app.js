@@ -90,18 +90,27 @@ qwerty.addEventListener('click', event => {
     const checkWin = () => {
     const phraseLetters = document.querySelectorAll('.letter');
     const show = document.querySelectorAll('.show');
-    const header = document.querySelectorAll('.title');
+    let header = document.querySelectorAll('.title');
 
       if(phraseLetters.length === show.length){
         overlay.classList.add('win');
         const winningHeadline = document.querySelector('.title');
         winningHeadline.innerHTML = 'Congratulations! YOU WON!';
         overlay.style.display = 'flex';
+        let newButton = document.createElement('button');
+        newButton.innerHTML = 'reset';
+        let div = document.getElementsByTagName('div')[1];
+        div.appendChild(newButton)
       } else if (timesLost > 4){
         overlay.classList.add('.lose');
         const winningHeadline = document.querySelector('.title');
         winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
         overlay.style.display = 'flex';
+        let newButton = document.createElement('button');
+        newButton.innerHTML = 'reset';
+        let div = document.getElementsByTagName('div')[1];
+        div.appendChild(newButton)
+        
       };//end elseif
   };//end function
   checkWin();
