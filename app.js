@@ -121,6 +121,15 @@ qwerty.addEventListener('click', event => {
 
          //remove phrase from display
          removePhraseFromDisplay(phraseLetters);
+
+         //reset button classes to ''
+        let keys = document.getElementsByTagName('BUTTON');
+        for(let i = 0; i < 26; i++){
+          if(keys[i].className === 'chosen'){
+            keys[i].className = ' ';
+            keys[i].disabled = false; //THIS WORKS!!!!
+          };
+        };
         
          
 
@@ -156,12 +165,11 @@ qwerty.addEventListener('click', event => {
           removePhraseFromDisplay(phraseLetters);
 
           //reset button classes to ''
-         
-        let button = getElementsByTagName('BUTTON');
+        let keys = document.getElementsByTagName('BUTTON');
         for(let i = 0; i < 26; i++){
-          if(button[i].className === 'chosen'){
-            button[i].className = ' ';
-            button.disabled = false; 
+          if(keys[i].className === 'chosen'){
+            keys[i].className = ' ';
+            keys[i].disabled = false; //THIS WORKS!!!!
           };
         };
            

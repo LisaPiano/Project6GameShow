@@ -108,7 +108,7 @@ button {
   background: var(--color-neutral);
   border-radius: 5px;
   font-size: var(--font-size-medium);
-  color: #FFFFFF;
+  color: yellow; 
 }
 
 .btn__reset {
