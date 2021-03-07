@@ -1,11 +1,11 @@
 
 const qwerty = document.getElementById('qwerty');
-const phrase = document.getElementById('phrase');
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
 let button = document.querySelector('button');
-let li = document.createElement('li');
+let body = document.getElementsByTagName('BODY');
+//let li = document.createElement('li');
 
 //event listener for reset button that removes the overaly 
 resetButton.addEventListener('click', () => {
@@ -41,15 +41,20 @@ resetButton.addEventListener('click', () => {
                 li.className += "space";
             } else {
                 li.className += "letter";
-            }
+            };
          ul.appendChild(li);
      }  
  };
  addPhraseToDisplay(array);
 
-  //Function that checks to see if a specific letter is in the selected phrase
-  //let checkLetter = (button) => {
-    
+//Function that removes array
+ const removePhraseFromDisplay = (array) => {
+  for (let i = 0; i < phraseLetters.length; i++){
+    phraseLetters[i].style.display = 'none'; 
+   }  
+};
+
+  //Function that checks to see if a specific letter is in the selected phrase  
 const phraseLetters = document.querySelectorAll('.letter');
 
 
@@ -81,44 +86,100 @@ qwerty.addEventListener('click', event => {
       const heart = document.querySelectorAll('img');
       heart[heartNumber].setAttribute('src', "images/lostHeart.png");
     };
-    // checkWin() function call goes here
-  
+    
 
-
-
- // checkWin() function call goes here
     const checkWin = () => {
     const phraseLetters = document.querySelectorAll('.letter');
     const show = document.querySelectorAll('.show');
     let header = document.querySelectorAll('.title');
 
+    //IF the player has won
       if(phraseLetters.length === show.length){
         overlay.classList.add('win');
         const winningHeadline = document.querySelector('.title');
         winningHeadline.innerHTML = 'Congratulations! YOU WON!';
         overlay.style.display = 'flex';
-        let newButton = document.createElement('button');
-        newButton.innerHTML = 'reset';
+
+        //create new button that says RESET
+        resetButton.style.display = 'none';//Hide button that says START
+        let newButton = document.createElement('button');//create button that says RESET
+        newButton.className = 'newButton';
+        newButton.innerHTML = 'RESET';
         let div = document.getElementsByTagName('div')[1];
         div.appendChild(newButton)
+
+        //when RESET button is clicked
+        newButton.addEventListener('click', () => {
+          overlay.style.display = 'none';
+        });
+
+         //reset live-heart images
+         const heart = document.querySelectorAll('img');
+         for(let i =0; i < 5; i++){
+         heart[i].setAttribute('src', "images/liveHeart.png");
+         };
+
+         //remove phrase from display
+         removePhraseFromDisplay(phraseLetters);
+        
+         
+
+
+//ELSE if the player has lost
       } else if (timesLost > 4){
         overlay.classList.add('.lose');
         const winningHeadline = document.querySelector('.title');
         winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
         overlay.style.display = 'flex';
+
+        //create new button that says RESET
+        resetButton.style.display = 'none';
         let newButton = document.createElement('button');
-        newButton.innerHTML = 'reset';
+        newButton.className = 'newButton'; 
+        newButton.innerHTML = 'RESET';
         let div = document.getElementsByTagName('div')[1];
-        div.appendChild(newButton)
-        
-      };//end elseif
-  };//end function
+        div.appendChild(newButton);
+
+        //When reset button is clicked, 
+        newButton.addEventListener('click', () => {
+          overlay.style.display = 'none';//remove overlay-works
+          timesLost = 0; //resetting timesLost to 0--works
+          heartNumber = 5-timesLost; //resetting heartNumber to 5--works
+
+          //reset live-heart images
+          const heart = document.querySelectorAll('img');
+          for(let i =0; i < 5; i++){
+          heart[i].setAttribute('src', "images/liveHeart.png");
+          };
+
+          //remove phrase from display
+          removePhraseFromDisplay(phraseLetters);
+
+          //reset button classes to ''
+         
+        let button = getElementsByTagName('BUTTON');
+        for(let i = 0; i < 26; i++){
+          if(button[i].className === 'chosen'){
+            button[i].className = ' ';
+            button.disabled = false; 
+          };
+        };
+           
+          
+         // phraseLetters.className = ''; //phrase letter classes cancelled
+          //show.className = ''; //phrase class canceled
+          //let newArray = getRandomPhraseAsArray(phrases);//works
+         // addPhraseToDisplay(newArray);//works
+
+        });//end RESET event listener
+      };//end else if
+  };
+
   checkWin();
-}
-});
+};
+});// end click event on button
 
-  
-
+ 
 
   
   

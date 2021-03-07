@@ -134,6 +134,12 @@ button {
   border-radius: 5px;
 }
 
+.newButton {
+  background-color: red; 
+  width: 100px; 
+  margin: auto; 
+}
+
 .title {
   color: #FFF;
 }
