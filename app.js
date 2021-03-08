@@ -3,74 +3,69 @@ const qwerty = document.getElementById('qwerty');
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
-let button = document.querySelector('button');
-let body = document.getElementsByTagName('BODY');
-//let li = document.createElement('li');
+let button = document.querySelector('button');// variable for the keys on the qwerty keyboard
+//let body = document.getElementsByTagName('BODY');
+const phraseLetters = document.querySelectorAll('.letter');//variable for the letters in the array phrase
+let timesLost = 0;// number of incorrect guesses; increments 
+
 
 //event listener for reset button that removes the overaly 
 resetButton.addEventListener('click', () => {
     overlay.style.display = 'none';
-  });
+});
 
-  //array of phrases to be used in the game
-  const phrases = [
-    "To be or not to be",
-    "An apple a day keeps the doctor away",
-    "Paint me like one of your French Girls",
-    "What goes up must come down",
-    "Luke I am your father",
-    "With great power comes great responsibility",
-    "All you need is love"
-  ];
+//array of phrases to be used in the game
+const phrases = [
+  "To be or not to be",
+  "An apple a day keeps the doctor away",
+  "Paint me like one of your French Girls",
+  "What goes up must come down",
+  "Luke I am your father",
+  "With great power comes great responsibility",
+  "All you need is love"
+];
 
-  //Function that takes an array of phrases as a parameter, and then returns a random phrase from the array using a random number generator
-  const getRandomPhraseAsArray = (array) => {
-    let num = Math.floor(Math.random() * array.length); 
-    let charArray = [];
-    return(array[num]);
-  };
-  let array = getRandomPhraseAsArray(phrases);
+//Function that takes an array of phrases as a parameter, and then returns a random 
+//phrase from the array using a random number generator
+const getRandomPhraseAsArray = (array) => {
+  let num = Math.floor(Math.random() * array.length); 
+  let charArray = [];
+  return(array[num]);
+};
+let array = getRandomPhraseAsArray(phrases);
 
 //Function that takes any array and returns it as a string of chars
  const addPhraseToDisplay = (array) => {
-     for (let i = 0; i < array.length; i++){
-      let li = document.createElement('li');
-         li.textContent = array.charAt(i);
+  for (let i = 0; i < array.length; i++){
+  let li = document.createElement('li');
+      li.textContent = array.charAt(i);
 
-            if(li.textContent ===" "){
-                li.className += "space";
-            } else {
-                li.className += "letter";
-            };
-         ul.appendChild(li);
-     }  
- };
+        if(li.textContent ===" "){
+            li.className += "space";
+        } else {
+            li.className += "letter";
+        };
+      ul.appendChild(li);
+  };//end for  
+ };//end function
  addPhraseToDisplay(array);
 
-//Function that removes array
+//Function that removes array-to be later used in checkWin function 
  const removePhraseFromDisplay = (array) => {
   for (let i = 0; i < phraseLetters.length; i++){
     phraseLetters[i].style.display = 'none'; 
-   }  
+   };  
 };
 
-  //Function that checks to see if a specific letter is in the selected phrase  
-const phraseLetters = document.querySelectorAll('.letter');
-
-
-let timesLost = 0;
+//Function that checks to see if a specific letter is in the selected phrase  
 const checkLetter = (button) => {
   let isMatch = null;
-  
-  
   for (i=0; i < phraseLetters.length; i++) {
     if (button === phraseLetters[i].textContent.toLowerCase()) {
       phraseLetters[i].classList.add('show');
       isMatch = true;
-    }
-    
-  }
-
+    }; 
+  };
   return isMatch;
 };
 
@@ -87,109 +82,124 @@ qwerty.addEventListener('click', event => {
       heart[heartNumber].setAttribute('src', "images/lostHeart.png");
     };
     
-
+    //function to check if the player has won or lost---every time a letter is chosen
     const checkWin = () => {
-    const phraseLetters = document.querySelectorAll('.letter');
-    const show = document.querySelectorAll('.show');
-    let header = document.querySelectorAll('.title');
-
-    //IF the player has won
-      if(phraseLetters.length === show.length){
-        overlay.classList.add('win');
-        const winningHeadline = document.querySelector('.title');
-        winningHeadline.innerHTML = 'Congratulations! YOU WON!';
-        overlay.style.display = 'flex';
-
-        //create new button that says RESET
-        resetButton.style.display = 'none';//Hide button that says START
-        let newButton = document.createElement('button');//create button that says RESET
-        newButton.className = 'newButton';
-        newButton.innerHTML = 'RESET';
-        let div = document.getElementsByTagName('div')[1];
-        div.appendChild(newButton)
-
-        //when RESET button is clicked
-        newButton.addEventListener('click', () => {
-          overlay.style.display = 'none';
-        });
-
-         //reset live-heart images
-         const heart = document.querySelectorAll('img');
-         for(let i =0; i < 5; i++){
-         heart[i].setAttribute('src', "images/liveHeart.png");
-         };
-
-         //remove phrase from display
-         removePhraseFromDisplay(phraseLetters);
-
-         //reset button classes to ''
-        let keys = document.getElementsByTagName('BUTTON');
-        for(let i = 0; i < 26; i++){
-          if(keys[i].className === 'chosen'){
-            keys[i].className = ' ';
-            keys[i].disabled = false; //THIS WORKS!!!!
-          };
-        };
-        
-         
-
-
-//ELSE if the player has lost
-      } else if (timesLost > 4){
-        overlay.classList.add('.lose');
-        const winningHeadline = document.querySelector('.title');
-        winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
-        overlay.style.display = 'flex';
-
-        //create new button that says RESET
-        resetButton.style.display = 'none';
-        let newButton = document.createElement('button');
-        newButton.className = 'newButton'; 
-        newButton.innerHTML = 'RESET';
-        let div = document.getElementsByTagName('div')[1];
-        div.appendChild(newButton);
-
-        //When reset button is clicked, 
-        newButton.addEventListener('click', () => {
-          overlay.style.display = 'none';//remove overlay-works
-          timesLost = 0; //resetting timesLost to 0--works
-          heartNumber = 5-timesLost; //resetting heartNumber to 5--works
-
-          //reset live-heart images
-          const heart = document.querySelectorAll('img');
-          for(let i =0; i < 5; i++){
-          heart[i].setAttribute('src', "images/liveHeart.png");
-          };
-
-          //remove phrase from display
-          removePhraseFromDisplay(phraseLetters);
-
-          //reset button classes to ''
-        let keys = document.getElementsByTagName('BUTTON');
-        for(let i = 0; i < 26; i++){
-          if(keys[i].className === 'chosen'){
-            keys[i].className = ' ';
-            keys[i].disabled = false; //THIS WORKS!!!!
-          };
-        };
-           
+      const phraseLetters = document.querySelectorAll('.letter');
+      const show = document.querySelectorAll('.show');
+      let header = document.querySelectorAll('.title');
+  
+      //If the player has won
+        if(phraseLetters.length === show.length){
+          overlay.classList.add('win');
+          const winningHeadline = document.querySelector('.title');
+          winningHeadline.innerHTML = 'Congratulations! YOU WON!';
+          overlay.style.display = 'flex';
+  
+      
+          resetButton.style.display = 'none';//Hide button that says START
+          let newButton = document.createElement('button');//create new button that says RESET
+          newButton.className = 'newButton';
+          newButton.innerHTML = 'RESET';
+          let div = document.getElementsByTagName('div')[1];
+          div.appendChild(newButton)
           
-         // phraseLetters.className = ''; //phrase letter classes cancelled
-          //show.className = ''; //phrase class canceled
-          //let newArray = getRandomPhraseAsArray(phrases);//works
-         // addPhraseToDisplay(newArray);//works
+       //When reset button is clicked, 
+       newButton.addEventListener('click', () => {
+        overlay.style.display = 'none';//remove overlay-works
+        timesLost = 0; //resetting timesLost to 0--works
+        heartNumber = 5-timesLost; //resetting heartNumber to 5--works
+        newButton.style.display = 'none'; 
 
-        });//end RESET event listener
-      };//end else if
+        //reset live-heart images
+        const heart = document.querySelectorAll('img');
+        for(let i =0; i < 5; i++){
+        heart[i].setAttribute('src', "images/liveHeart.png");
+        };
+
+        //remove phrase from display
+        removePhraseFromDisplay(phraseLetters);
+
+        //reset button classes to '' empty string
+      let keys = document.getElementsByTagName('BUTTON');
+      for(let i = 0; i < 26; i++){
+        if(keys[i].className === 'chosen'){
+          keys[i].className = ' ';
+          keys[i].disabled = false; //THIS WORKS!!!!
+        };
+      };
+         
+        
+       // phraseLetters.className = ''; //phrase letter classes cancelled
+        //show.className = ''; //phrase class canceled
+        let newArray = getRandomPhraseAsArray(phrases);
+        addPhraseToDisplay(newArray);
+
+      });//end RESET event listener
+          
+  
+           
+        
+  //ELSE if the player has lost
+        } else if (timesLost > 4){
+          overlay.classList.add('.lose');
+          const winningHeadline = document.querySelector('.title');
+          winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
+          overlay.style.display = 'flex';
+  
+           
+           resetButton.style.display = 'none';//Hide button that says START
+           let newButton = document.createElement('button');//create new button that says RESET
+           newButton.className = 'newButton';
+           newButton.innerHTML = 'RESET';
+           let div = document.getElementsByTagName('div')[1];
+           div.appendChild(newButton)
+        
+          
+          
+          //When reset button is clicked, 
+          newButton.addEventListener('click', () => {
+            overlay.style.display = 'none';//remove overlay-works
+            timesLost = 0; //resetting timesLost to 0--works
+            heartNumber = 5-timesLost; //resetting heartNumber to 5--works
+            newButton.style.display = 'none'; 
+  
+            //reset live-heart images
+            const heart = document.querySelectorAll('img');
+            for(let i =0; i < 5; i++){
+            heart[i].setAttribute('src', "images/liveHeart.png");
+            };
+  
+            //remove phrase from display
+            removePhraseFromDisplay(phraseLetters);
+  
+            //reset button classes to '' empty string
+          let keys = document.getElementsByTagName('BUTTON');
+          for(let i = 0; i < 26; i++){
+            if(keys[i].className === 'chosen'){
+              keys[i].className = ' ';
+              keys[i].disabled = false; //THIS WORKS!!!!
+            };
+          };
+             
+            
+           // phraseLetters.className = ''; //phrase letter classes cancelled
+            //show.className = ''; //phrase class canceled
+            let newArray = getRandomPhraseAsArray(phrases);
+            addPhraseToDisplay(newArray);
+  
+          });//end RESET event listener
+        };//end else if
+    };
+  
+    checkWin();
   };
-
-  checkWin();
-};
-});// end click event on button
-
- 
-
+  });// end click event on button
+  
+   
+  
+    
+    
+    
   
   
   
-
