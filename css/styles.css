@@ -67,6 +67,7 @@ button {
 .section {
   width: 100%;
   padding: 10px;
+  text-align: center; 
 }
 
 /* Title */
@@ -86,6 +87,7 @@ button {
   color: transparent;
   background: var(--color-neutral-light);
   border-radius: 5px;
+  text-align: center; 
 }
 
 .space {
@@ -108,7 +110,7 @@ button {
   background: var(--color-neutral);
   border-radius: 5px;
   font-size: var(--font-size-medium);
-  color: yellow; 
+  color:yellow; 
 }
 
 .btn__reset {
