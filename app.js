@@ -1,13 +1,12 @@
 //run function playGame
 function playGame(){
-  console.log('hi!');
+  
 
 //declare universal variables
 const qwerty = document.getElementById('qwerty');
 let resetButton = document.getElementsByClassName('btn__reset')[0];
 const overlay = document.getElementById('overlay');
 let ul = document.getElementById('phrase');
-let button = document.querySelector('button');// variable for the keys on the qwerty keyboard
 let timesLost = 0;// number of incorrect guesses; increments
 
 //event listener for reset button that initially removes the overaly 
@@ -66,13 +65,11 @@ let checkLetter = (button) => {
   const phraseLetters = document.querySelectorAll('li');//variable for all the letters in the array phrase
   for (i=0; i < phraseLetters.length; i++) {
     if (button === phraseLetters[i].textContent.toLowerCase()) {
-      console.log(button);
-      console.log(phraseLetters);
-      console.log('phraseLetters length is: ' + phraseLetters.length);
+      //Here, add class .show and transition styles
       phraseLetters[i].classList.add('show');
       phraseLetters[i].style.color = 'yellow';
-      
-      console.log('yes!');
+      phraseLetters[i].style.transition = '2s'; 
+      phraseLetters[i].style.borderRadius = '50%';
       isMatch = true;
     } //end if
   }//end for
@@ -88,7 +85,6 @@ qwerty.addEventListener('click', event => {
     if (match === null) {
       timesLost++;
       let heartNumber = 5-timesLost; 
-      console.log(heartNumber);
       const heart = document.querySelectorAll('img');
       heart[heartNumber].setAttribute('src', "images/lostHeart.png");
     };//end second if 
@@ -124,10 +120,7 @@ qwerty.addEventListener('click', event => {
         checkWin();
         //end eventListener on the keys of the keyboard
 }); 
-       //-------------------------------------------------------------------------------
-               
-     
-       
+    
       //When reset button is clicked, 
       newButton.addEventListener('click', () => {
       overlay.style.display = 'none';//remove overlay-works
@@ -145,7 +138,7 @@ qwerty.addEventListener('click', event => {
         for(let i = 0; i <= 26; i++){
           if(keys[i].className === 'chosen'){
             keys[i].className = ' ';
-            keys[i].disabled = false; //THIS WORKS!!!!
+            keys[i].disabled = false; 
           }//end if
         };//end for
 
@@ -161,15 +154,14 @@ qwerty.addEventListener('click', event => {
         let ul = document.createElement('ul');
         resetPhrase.appendChild(ul);
         
-        
         //generate a new phrase
         let newArray = getRandomPhraseAsArray(phrases);
         console.log(newArray);
       
         //add new phrase to the resetPhrase Div
-        //addPhraseToDisplay(newArray);---WHY WILL THIS NOT WORK????
+        //addPhraseToDisplay(newArray);---WHY WILL THIS NOT WORK???? I feel like I should just be able to
+        //run this function, but it doesn't work! Instead, I need to hardcode the following...
         
-
         for (let i = 0; i < newArray.length; i++){
         let li = document.createElement('li');
             li.textContent = newArray.charAt(i);
