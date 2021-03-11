@@ -1,7 +1,6 @@
 //run function playGame
 function playGame(){
   
-
 //declare universal variables
 const qwerty = document.getElementById('qwerty');
 let resetButton = document.getElementsByClassName('btn__reset')[0];
@@ -14,7 +13,7 @@ resetButton.addEventListener('click', () => {
   overlay.style.display = 'none';
 });
 
- //create new button that says RESET
+ //create new button that says RESET that is invisible until the game is won or lost
  let newButton = document.createElement('button');//create new button that says RESET
  newButton.className = 'newButton';
  newButton.innerHTML = 'RESET';
@@ -40,7 +39,6 @@ const getRandomPhraseAsArray = (array) => {
   return(array[num]);
 };
 let array = getRandomPhraseAsArray(phrases);
-console.log(array); 
 
 //Function that takes any array and returns it as a string of chars
  let addPhraseToDisplay = (array) => {
@@ -94,8 +92,7 @@ qwerty.addEventListener('click', event => {
     const checkWin = () => {
       const phraseLetters = document.querySelectorAll('.letter');
       const show = document.querySelectorAll('.show');
-      let header = document.querySelectorAll('.title');
-  
+      
       //If the player has won
         if(phraseLetters.length === show.length){
           overlay.classList.add('win');
@@ -109,7 +106,7 @@ qwerty.addEventListener('click', event => {
         } else if (timesLost > 4){
           overlay.classList.add('.lose');
           const winningHeadline = document.querySelector('.title');
-          winningHeadline.textContent = 'Sorry, YOU LOST! PLease try again!';
+          winningHeadline.textContent = 'Sorry, YOU LOST! Please try again!';
           overlay.style.display = 'flex';
           resetButton.style.display = 'none';//Hide button that says START
           newButton.style.display = 'flex';
@@ -118,14 +115,13 @@ qwerty.addEventListener('click', event => {
           
         //run checkWin
         checkWin();
-        //end eventListener on the keys of the keyboard
-}); 
+}); //end eventListener on the keys of the keyboard
     
       //When reset button is clicked, 
       newButton.addEventListener('click', () => {
-      overlay.style.display = 'none';//remove overlay-works
-      timesLost = 0; //resetting timesLost to 0--works
-      heartNumber = 5-timesLost; //resetting heartNumber to 5--works
+      overlay.style.display = 'none';//remove overlay
+      timesLost = 0; //resetting timesLost to 0
+      heartNumber = 5-timesLost; //resetting heartNumber to 5
       
         //reset live-heart images
         const heart = document.querySelectorAll('img');
